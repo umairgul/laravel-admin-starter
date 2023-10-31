@@ -14,14 +14,14 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('admin.dashboard') }}">
                         <span class="nav-link-title">
-                            Dashboard
+                            <i class="ti ti-brand-google-home"></i> Dashboard
                         </span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" href="{{ route('admin.profile') }}">
                         <span class="nav-link-title">
-                            Profile
+                            <i class="ti ti-user-circle"></i> Profile
                         </span>
                     </a>
                 </li>
