@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
@@ -13,7 +14,7 @@ class ProfileController extends Controller
 
     public function profile()
     {
-        return view('admin.profile', [
+        return view('admin.profile.index', [
             'user' => auth('admin')->user(),
             'pageTitle' => 'Profile'
         ]);
@@ -32,5 +33,30 @@ class ProfileController extends Controller
         $user->save();
 
         return back()->with('success', 'Profile updated');
+    }
+
+    public function password()
+    {
+        return view('admin.profile.password', [
+            'pageTitle' => 'Change Password'
+        ]);
+    }
+
+    public function updatePassword(Request $request)
+    {
+        $request->validate([
+            'old_password' => 'required',
+            'password' => 'required|min:8|confirmed'
+        ]);
+
+        if(Hash::check($request->old_password, $request->user($this->guard)->password)){
+            $user = Admin::find($request->user($this->guard)->id);
+            $user->password = Hash::make($request->password);
+            $user->save();
+
+            return redirect()->route('admin.dashboard')->with('success', 'Password updated');
+        }else{
+            return back()->with('error', 'Old password not matched the record, please try again');
+        }
     }
 }

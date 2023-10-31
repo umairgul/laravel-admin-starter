@@ -8,12 +8,6 @@
                     <div class="card-header">{{ $pageTitle ?? __('Dashboard') }}</div>
 
                     <div class="card-body">
-                        @if (session('success'))
-                            <div class="alert alert-success" role="alert">
-                                {{ session('success') }}
-                            </div>
-                        @endif
-
                         Hello Admin!
                     </div>
                 </div>
